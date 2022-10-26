@@ -1,10 +1,9 @@
 <template>
    <div class="container">
     <div slot="header">
-        <b>Test Project Techbodai</b>
+        <b style="font-size: 27px;">Test Project Techbodai</b>
       </div>
-
-
+  <el-button style="float: left;"  @click="sortList('cca3')" type="warning">Asc / Desc</el-button>
       <el-col :span="20" style="text-align: end;">
           <el-form
             :inline="true"
@@ -64,7 +63,7 @@
          prop="cca2"
          label="Cca2">
          <template slot-scope="{ row }">
-          <span v-if="row.cca2">{{ row.cca2}}</span>
+          <span v-if="row.cca2" >{{ row.cca2}}</span>
         </template>
        </el-table-column>
        <el-table-column
@@ -200,11 +199,25 @@
         selectRow: {},
         infoCountry: [],
         exampleItems: [],
+        sortedData: [],
+      sortedbyASC: true,
       }
     },
     mounted(){
       this.fetchData()
-      
+      this.tableData = this.originalData;
+      // this.sortedData = this.originalData;
+    },
+    computed: {
+      originalData() {
+      return [
+        { id: 1, name: "Night", email: "nightprogrammer95@gmail.com" },
+        { id: 2, name: "Gautam", email: "mailgautam@test.com" },
+        { id: 3, name: "Alex", email: "xalex@testmail.com" },
+        { id: 4, name: "Zora", email: "zora@mail.com" },
+        { id: 5, name: "Peter", email: "peter.me@test.com" },
+      ];
+    },
     },
     methods: {
       fetchData() {
@@ -214,7 +227,6 @@
           this.tableData = res.data
           this.exampleItems = res.data
         })
-        this.searchData()
       },
       searchData() {
         const getData = 'https://restcountries.com/v3.1/name/peru'
@@ -230,7 +242,16 @@
       },
       onChangePage(tableData) {
             this.tableData = tableData;
+      },
+      sortList(sortBy) {
+      if (this.sortedbyASC) {
+        this.tableData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+      } else {
+        this.tableData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
       }
+    },
     }
   }
 </script>
