@@ -75,7 +75,7 @@
          prop="name"
          label="Country">
          <template slot-scope="{ row }">
-          <span v-if="row.name">{{ row.name.official}}</span>
+          <span style="cursor: pointer;" v-if="row.name" @click="getInfoCountry(row)">{{ row.name.official}}</span>
         </template>
        </el-table-column>
        <el-table-column
@@ -89,6 +89,81 @@
         </template>
        </el-table-column>
      </el-table>
+     <!-- modal info of country -->
+     <el-dialog title="Info of country" :visible.sync="countryDialog">
+    <el-dialog
+        width="30%"
+        title="Inner Dialog"
+        :visible.sync="countryCancelDialog"
+        append-to-body>
+    </el-dialog>
+    <el-table
+      :data="tableData"
+      height="250"
+      style="width: 100%">
+      <el-table-column
+        prop="region"
+        label="Region">
+        <template slot-scope="{ row }">
+          <span v-if="row.region">{{ row.region}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="subregion"
+        label="Subregion">
+        <template slot-scope="{ row }">
+          <span v-if="row.subregion">{{ row.subregion}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="languages"
+        label="Language">
+        <template slot-scope="{ row }">
+          <span v-if="row.languages.eng">{{ row.languages.eng}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="area"
+        label="Area">
+        <template slot-scope="{ row }">
+          <span v-if="row.area">{{ row.area}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="maps"
+        label="Map">
+        <template slot-scope="{ row }">
+          <span v-if="row.maps">{{ row.maps.googleMaps}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="car"
+        label="Car">
+        <template slot-scope="{ row }">
+          <span v-if="row.car.signs[0]">{{ row.car.signs[0]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="timezones"
+        label="TimeZones">
+        <template slot-scope="{ row }">
+          <span v-if="row.timezones[0]">{{ row.timezones[0]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+      prop="capitalInfo"
+      label="Capital">
+      <template slot-scope="{ row }">
+        <span v-if="row.capitalInfo.latlng[0]">{{ row.capitalInfo.latlng[0]}}</span>
+      </template>
+      </el-table-column>
+    </el-table>
+    
+
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="countryDialog = false">Cancel</el-button>
+    </div>
+  </el-dialog>
    </div>
 </template>
 
@@ -96,7 +171,11 @@
   export default {
     data() {
       return {
-        tableData: []
+        tableData: [],
+        countryDialog: false,
+        countryCancelDialog: false,
+        selectRow: {},
+        infoCountry: [],
       }
     },
     mounted(){
@@ -110,6 +189,10 @@
           this.tableData = res.data
           console.log(this.tableData)
         })
+      },
+      getInfoCountry(row) {
+        this.countryDialog = !this.countryDialog
+        this.selectRow = row
       }
     }
   }
