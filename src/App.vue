@@ -13,7 +13,6 @@
           >
             <el-form-item label="Seach Info:">
               <el-input
-                v-model="usernameKeyword"
                 placeholder="Search..."
                 clearable
               />
@@ -23,17 +22,19 @@
       <el-button
         type="success"
         style="float: right; margin-right: 66px; margin-top: 10px;"
-        @click="searchData"
       >Search</el-button>
-
-
-     <el-table
+        <el-table
          :data="tableData"
          fit
          highlight-current-row
          style="margin-top: 2%; text-align: center;"
          border
       >
+      <el-table-column
+         label="DI"
+         type="index"
+         width="60">
+       </el-table-column>
        <el-table-column
          prop="idd"
          label="Idd"
@@ -88,7 +89,9 @@
           :src="row.flags.png"></el-image>
         </template>
        </el-table-column>
-     </el-table>
+        </el-table>
+        <br>
+            <jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination>
      <!-- modal info of country -->
      <el-dialog title="Info of country" :visible.sync="countryDialog">
     <el-dialog
@@ -169,6 +172,24 @@
 
 <script>
   export default {
+    props: {
+            items: {
+                type: Array,
+                required: true
+            },
+            initialPage: {
+                type: Number,
+                default: 1
+            },
+            pageSize: {
+                type: Number,
+                default: 25
+            },
+            maxPages: {
+                type: Number,
+                default: 25
+            },
+        },
     data() {
       return {
         tableData: [],
@@ -176,10 +197,12 @@
         countryCancelDialog: false,
         selectRow: {},
         infoCountry: [],
+        exampleItems: [],
       }
     },
     mounted(){
       this.fetchData()
+      
     },
     methods: {
       fetchData() {
@@ -187,13 +210,16 @@
         this.$http.get(getData)
         .then((res) => {
           this.tableData = res.data
-          console.log(this.tableData)
+          this.exampleItems = res.data
         })
       },
       getInfoCountry(row) {
         this.countryDialog = !this.countryDialog
         this.selectRow = row
-      }
+      },
+      onChangePage(tableData) {
+            this.tableData = tableData;
+        }
     }
   }
 </script>

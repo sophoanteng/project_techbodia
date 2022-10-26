@@ -5,6 +5,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { Button, Select } from 'element-ui';
 import './plugins/element.js'
+import JwPagination from 'jw-vue-pagination';
+Vue.component('jw-pagination', JwPagination);
 import {
   Pagination,
   Dialog,
