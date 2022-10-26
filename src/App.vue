@@ -15,12 +15,14 @@
               <el-input
                 placeholder="Search..."
                 clearable
+                v-model="keywordCountry"
               />
             </el-form-item>
           </el-form>
         </el-col>
       <el-button
         type="success"
+        @click="searchData()"
         style="float: right; margin-right: 66px; margin-top: 10px;"
       >Search</el-button>
         <el-table
@@ -30,11 +32,11 @@
          style="margin-top: 2%; text-align: center;"
          border
       >
-      <el-table-column
+      <!-- <el-table-column
          label="DI"
          type="index"
          width="60">
-       </el-table-column>
+       </el-table-column> -->
        <el-table-column
          prop="idd"
          label="Idd"
@@ -76,7 +78,7 @@
          prop="name"
          label="Country">
          <template slot-scope="{ row }">
-          <span style="cursor: pointer;" v-if="row.name" @click="getInfoCountry(row)">{{ row.name.official}}</span>
+          <span style="cursor: pointer;" v-if="row.name" @click="getInfoCountry(row)">{{ row.name.common}}</span>
         </template>
        </el-table-column>
        <el-table-column
@@ -91,8 +93,7 @@
        </el-table-column>
         </el-table>
         <br>
-            <jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination>
-     <!-- modal info of country -->
+        <jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination>
      <el-dialog title="Info of country" :visible.sync="countryDialog">
     <el-dialog
         width="30%"
@@ -132,13 +133,13 @@
           <span v-if="row.area">{{ row.area}}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="maps"
         label="Map">
         <template slot-scope="{ row }">
           <span v-if="row.maps">{{ row.maps.googleMaps}}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="car"
         label="Car">
@@ -195,6 +196,7 @@
         tableData: [],
         countryDialog: false,
         countryCancelDialog: false,
+        keywordCountry: '',
         selectRow: {},
         infoCountry: [],
         exampleItems: [],
@@ -212,6 +214,15 @@
           this.tableData = res.data
           this.exampleItems = res.data
         })
+        this.searchData()
+      },
+      searchData() {
+        const getData = 'https://restcountries.com/v3.1/name/peru'
+        this.$http.get(getData, this.keywordCountry, this.exampleItems)
+        .then((res) => {
+          this.tableData = res.data
+        })
+        console.log(this.tableData)
       },
       getInfoCountry(row) {
         this.countryDialog = !this.countryDialog
@@ -219,7 +230,7 @@
       },
       onChangePage(tableData) {
             this.tableData = tableData;
-        }
+      }
     }
   }
 </script>
