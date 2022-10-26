@@ -3,6 +3,30 @@
     <div slot="header">
         <b>Test Project Techbodai</b>
       </div>
+
+
+      <el-col :span="20" style="text-align: end;">
+          <el-form
+            :inline="true"
+            class="demo-form-inline"
+            style="margin-top: 1%"
+          >
+            <el-form-item label="Seach Info:">
+              <el-input
+                v-model="usernameKeyword"
+                placeholder="Search..."
+                clearable
+              />
+            </el-form-item>
+          </el-form>
+        </el-col>
+      <el-button
+        type="success"
+        style="float: right; margin-right: 66px; margin-top: 10px;"
+        @click="searchData"
+      >Search</el-button>
+
+
      <el-table
          :data="tableData"
          fit
@@ -35,16 +59,14 @@
        </el-table-column>
        <el-table-column
          prop="cca2"
-         label="Cca2"
-         width="100">
+         label="Cca2">
          <template slot-scope="{ row }">
           <span v-if="row.cca2">{{ row.cca2}}</span>
         </template>
        </el-table-column>
        <el-table-column
          prop="cca3"
-         label="Cca3"
-         width="100">
+         label="Cca3">
          <template slot-scope="{ row }">
           <span v-if="row.cca3">{{ row.cca3}}</span>
         </template>
