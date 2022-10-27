@@ -1,10 +1,13 @@
 <template>
   <div class="container">
     <div slot="header">
-      <b style="font-size: 27px">Test Project Techbodai</b>
+      <b style="font-size: 27px">Project Techbodai</b>
     </div>
-    <el-button style="float: left" @click="sortList('cca3')" type="warning"
-      >Asc / Desc</el-button
+    <el-button v-if="sortedbyASC" style="float: left" @click="sortList('cca3')" type="warning"
+      >Asc</el-button
+    >
+    <el-button v-else style="float: left" @click="sortList('cca3')" type="success"
+      >Desc</el-button
     >
     <el-col :span="20" style="text-align: end">
       <el-form :inline="true" class="demo-form-inline" style="margin-top: 1%">
@@ -31,11 +34,11 @@
       style="margin-top: 2%; text-align: center"
       border
     >
-      <!-- <el-table-column
-         label="DI"
+      <el-table-column
+         label="Num"
          type="index"
          width="60">
-       </el-table-column> -->
+       </el-table-column>
       <el-table-column prop="idd" label="Idd" width="60">
         <template slot-scope="{ row }">
           <span v-if="row.idd">{{ row.idd.root }}</span>
@@ -118,13 +121,6 @@
             <span v-if="row.area">{{ row.area }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column
-        prop="maps"
-        label="Map">
-        <template slot-scope="{ row }">
-          <span v-if="row.maps">{{ row.maps.googleMaps}}</span>
-        </template>
-      </el-table-column> -->
         <el-table-column prop="car" label="Car">
           <template slot-scope="{ row }">
             <span v-if="row.car.signs[0]">{{ row.car.signs[0] }}</span>
@@ -188,18 +184,6 @@ export default {
   mounted() {
     this.fetchData();
     this.tableData = this.originalData;
-    // this.sortedData = this.originalData;
-  },
-  computed: {
-    originalData() {
-      return [
-        { id: 1, name: "Night", email: "nightprogrammer95@gmail.com" },
-        { id: 2, name: "Gautam", email: "mailgautam@test.com" },
-        { id: 3, name: "Alex", email: "xalex@testmail.com" },
-        { id: 4, name: "Zora", email: "zora@mail.com" },
-        { id: 5, name: "Peter", email: "peter.me@test.com" },
-      ];
-    },
   },
   methods: {
     fetchData() {
