@@ -260,4 +260,11 @@
   text-align: center;
   margin-top: 3%;
  }
+ .el-table th.el-table__cell>.cell {
+    color: green;
+    text-align: center;
+ }
+ .el-table td.el-table__cell div {
+    text-align: center;
+}
 </style>
