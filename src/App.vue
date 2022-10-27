@@ -22,7 +22,7 @@
       <el-button
         type="success"
         @click="searchData()"
-        style="float: right; margin-right: 66px; margin-top: 10px;"
+        style="float: right; margin-right: 66px; margin-top: 13px;"
       >Search</el-button>
         <el-table
          v-loading="loading"
@@ -93,7 +93,7 @@
        </el-table-column>
         </el-table>
         <br>
-        <jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination>
+        <jw-pagination :pageSize="25" :items="exampleItems" @changePage="onChangePage"></jw-pagination>
      <el-dialog title="Info of country" :visible.sync="countryDialog">
     <el-dialog
         width="30%"
@@ -270,5 +270,8 @@
  }
  .el-table td.el-table__cell div {
     text-align: center;
+}
+li.page-item.page-number.active {
+  color: red;
 }
 </style>
