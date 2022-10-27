@@ -25,6 +25,7 @@
         style="float: right; margin-right: 66px; margin-top: 10px;"
       >Search</el-button>
         <el-table
+         v-loading="loading"
          :data="tableData"
          fit
          highlight-current-row
@@ -200,7 +201,8 @@
         infoCountry: [],
         exampleItems: [],
         sortedData: [],
-      sortedbyASC: true,
+        sortedbyASC: true,
+        loading: true,
       }
     },
     mounted(){
@@ -226,6 +228,8 @@
         .then((res) => {
           this.tableData = res.data
           this.exampleItems = res.data
+          this.loading = true
+          this.loading = false
         })
       },
       searchData() {
