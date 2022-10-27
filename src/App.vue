@@ -233,7 +233,7 @@
         })
       },
       searchData() {
-        const getData = 'https://restcountries.com/v3.1/name/peru'
+        const getData = `https://restcountries.com/v3.1/name/${this.keywordCountry}`
         this.$http.get(getData, this.keywordCountry, this.exampleItems)
         .then((res) => {
           this.tableData = res.data
